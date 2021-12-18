@@ -5,6 +5,7 @@ body {
 }
 * {
   box-sizing: border-box;
+  // border: 1px solid #000;
 }
 h1,
 h2,
@@ -132,4 +133,43 @@ body {
 }
 .cursor-pointer {
   cursor: pointer;
+}
+
+.btn {
+  display: inline-block;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 4rem;
+  padding: 3px 21px;
+  border: 1px solid $primary-dark-color;
+  cursor: pointer;
+  height: 38px;
+  line-height: 32px;
+}
+
+.btn-outline {
+  background: $white;
+  color: $primary-dark-color;
+}
+.btn-outline:hover {
+  background: $primary-100;
+}
+
+.btn-filled {
+  background: $primary-dark-color;
+  color: $white;
+}
+.btn-filled:hover{
+  background: $primary-800;
+  border: 1px solid $primary-800;
+}
+
+input {
+  outline-style: none;
+  padding: 8px 20px;
+  border: 1px solid $white;
+  border-radius: 20px;
+  color: $gray-600;
+  font-weight: 800;
+  font-size: 14px;
 }

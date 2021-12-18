@@ -1,0 +1,115 @@
+header{
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  background: $gray-200;
+  nav {
+    width: 100%;
+    height: 40px;
+  }
+  .navbar-toggle-label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5%;
+    svg{ 
+      fill: $gray-600; 
+    }
+  }
+  .nav-items {
+    position: relative;
+    top: -10px;
+    transform: scale(1, 0);
+    transform-origin: top;
+    transition: 0.3s ease-out;
+    background:  $gray-200;
+    @include computer {
+      all: unset;
+    }
+  }
+  .navbar-toggle {
+    display: none;
+  }
+  #navbar-toggle:checked ~ .nav-items {
+   transform: scale(1, 1);
+  }
+  #navbar-toggle:checked ~ .nav-items ul,#navbar-toggle:checked ~ .nav-items .my-journey,#navbar-toggle:checked ~ .nav-items .nav-search-input {
+    opacity: 1;
+    transition: opacity 0.5s ease-out 0.15s;
+  }
+  ul{
+    opacity: 0;
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    li {
+      width: 30%;
+      svg{
+        fill: $primary-dark-color
+      }
+    }
+  }
+  .my-journey {
+    opacity: 0;
+    width: 27%;
+    margin-bottom: 20px;
+  }
+
+  .logo{
+    display: block;
+    width: 133px;
+    height: 21.5px;
+    margin: 1.4rem auto;
+  }
+
+  .nav-search-input{
+    opacity: 0;
+    margin-top: 24px;
+    width: 90%;
+  }
+}
+
+@media screen and (min-width: 768px){
+  header{
+    nav{ 
+      height: 60px;
+      display: grid;
+      align-items: center;
+      grid-template-columns: 1fr auto 15fr 1fr ;
+    }
+    .navbar-toggle-label {
+    display: none;
+  }
+    .nav-search-input,ul,.my-journey {
+     opacity: 1;
+  }
+    .logo {
+      grid-column: 2 / 3;
+    }
+    .nav-items{
+      grid-column: 3 / 4;
+      display: grid;
+      align-items: center;
+      margin-left: 10px;
+      grid-template-columns: 4fr  10fr auto ;
+    }
+    .my-journey{
+      width: auto;
+      margin: 0 0 0 0.5rem;
+    }
+    .nav-search-input {
+      margin: 0;
+    }
+    ul{
+      margin: 0;
+      width: 100%;
+      justify-content: flex-end;
+      li{
+        width: auto;
+        margin: 0 0.6rem ;
+      }
+    }
+  }
+
+}
