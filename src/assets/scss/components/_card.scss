@@ -1,0 +1,94 @@
+.hot-spots{
+  max-width: 1200px;
+  width: 90%;
+  margin: 48px auto;
+  .title {
+    margin:  auto;
+    h2 {
+      color: $black;
+      letter-spacing: 1px;
+    }
+  }
+}
+.card-area {
+  text-align-last: left;
+  white-space: default;
+  @include pad{
+    white-space: nowrap;
+    // overflow: scroll;
+  }
+    @include computer{
+    white-space: nowrap;  
+    // overflow: scroll;
+  }
+}
+.card {
+  display: inline-block;
+  border: 1px solid $white;
+  margin: 10px auto;
+  width: 100%;
+  border-radius: 20px;
+  @extend %standard-boxshadow;
+  @include pad {
+    width: 300px;
+    margin: 10px 20px 10px 0px;
+  }
+  @include computer {
+    width: 300px;
+    margin: 10px 20px 10px 0px;
+
+  }
+  .card-top {
+    margin: 20px;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    img {
+      position: absolute;
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin-top: 90px;
+      margin-left: 50%;
+      transform: translate(-50%, -50%) scale(1,1);
+      
+    }
+    img:hover {
+      transform:translate(-50%, -50%) scale(1.1,1.1);
+      transition: all 0.5s ease;
+    }
+    .favorite{
+      position: absolute;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      right: 10px;
+      top: 10px;
+      border-radius: 50%;
+      border: 1px solid $primary-color;
+      background-color: $white;
+    }
+  }
+  .card-bottom{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin: 20px;
+    h3 {
+      color: $gray-700;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+    .tag-area {
+      margin-top: 10px;
+    }
+    .star {
+      svg {
+        margin-right: 3px;
+      }
+    }
+  }
+}

@@ -86,6 +86,14 @@ body {
   display: flex;
 }
 
+.relative {
+  position: relative;
+}
+
+.absolute{
+  position: absolute;
+}
+
 .flex-column {
   flex-direction: column;
 }
@@ -135,6 +143,10 @@ body {
   cursor: pointer;
 }
 
+h1 {
+  font-size: 3rem;
+}
+
 .btn {
   display: inline-block;
   text-align: center;
@@ -172,4 +184,14 @@ input {
   color: $gray-600;
   font-weight: 800;
   font-size: 14px;
+}
+
+.tag {
+  display: inline-block;
+  background-color: $primary-600;
+  color: $white;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 30px;
+  margin: 0 8px 0 0;
 }

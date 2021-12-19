@@ -1,0 +1,48 @@
+.home-banner {
+  position: relative;
+  height: 686px;
+  background-image: url('../../assets/images/unsplash_L6xHmv2R3G4.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .title-banner {
+    max-width: 600px;
+    width: 90%;
+  }
+  h1 {
+    color: $white;
+    text-shadow: 0px 0 0.1em rgba(255, 255, 255, 0.4);
+    margin-bottom: 10px;
+  }
+  .home-search-bar {
+    height: 60px;
+    width: 60%;
+    border-radius: 30px;
+    font-size: 1.3rem;
+    letter-spacing: 0.1rem;
+    padding: 0 20px;
+    @include computer {
+      height: 74px;
+      width: 80%;
+      border-radius: 36px;
+      font-size: 1.5rem;
+      letter-spacing: 0.1rem;
+      padding: 0 40px;
+    }
+  }
+  svg {
+    fill: $gray-600;
+    position: absolute;
+    right: 23%;
+    height: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    @include computer {
+    right: 15%;
+    height: 35px;
+    }
+  }
+}
