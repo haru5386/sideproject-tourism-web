@@ -195,3 +195,29 @@ input {
   border-radius: 30px;
   margin: 0 8px 0 0;
 }
+
+.slick-prev, .slick-next {
+    height: 40px !important;
+    width: 40px !important;
+    position: absolute;
+    z-index: 10;
+    bottom: 0;
+}
+
+.slick-prev:before, .slick-next:before {
+  font-size: 40px !important;
+  color: $primary-color !important;
+  opacity: 0.3;
+}
+
+.slick-prev {
+  left: -40px !important;
+}
+
+.slick-next{
+  right: -40px !important;
+}
+
+.slick-prev:before:hover, .slick-next:before:hover {
+  opacity: 1;
+}

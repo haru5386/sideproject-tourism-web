@@ -3,7 +3,8 @@
   width: 90%;
   margin: 48px auto;
   .title {
-    margin:  auto;
+    padding: 0px 10px;
+    margin: auto;
     h2 {
       color: $black;
       letter-spacing: 1px;
@@ -11,33 +12,23 @@
   }
 }
 .card-area {
-  text-align-last: left;
-  white-space: default;
-  @include pad{
-    white-space: nowrap;
-    // overflow: scroll;
+  // text-align: left;
+  margin: 0 auto;
+  width: 90%;
+    @include computer {
+    width: 100%;
   }
-    @include computer{
-    white-space: nowrap;  
-    // overflow: scroll;
-  }
+}
+.card-slide {
+  width: 100%;
+  padding: 10px;
 }
 .card {
   display: inline-block;
-  border: 1px solid $white;
-  margin: 10px auto;
   width: 100%;
   border-radius: 20px;
   @extend %standard-boxshadow;
-  @include pad {
-    width: 300px;
-    margin: 10px 20px 10px 0px;
-  }
-  @include computer {
-    width: 300px;
-    margin: 10px 20px 10px 0px;
 
-  }
   .card-top {
     margin: 20px;
     height: 180px;
