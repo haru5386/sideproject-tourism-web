@@ -3,7 +3,7 @@
     <HomeBanner />
     <section class="hot-spots">
       <div class="title d-flex justify-content-between align-items-center">
-        <h2>熱門打卡景點</h2>
+        <h3>熱門打卡景點</h3>
         <div class="btn btn-filled">查看更多</div>
       </div>
       <VueSlickCarousel :arrows="true" v-bind="settings" class="card-area">
@@ -12,10 +12,19 @@
         <Card />
         <Card />
       </VueSlickCarousel>
-      <div class="c">
-        <p>123</p>
-        <p>123</p>
+    </section>
+    <SearchSpots />
+        <section class="rainbow-life">
+      <div class="title d-flex justify-content-between align-items-center">
+        <h3>Rainbow Life!</h3>
+        <div class="btn btn-filled">查看更多</div>
       </div>
+      <VueSlickCarousel :arrows="true" v-bind="settings" class="card-area">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </VueSlickCarousel>
     </section>
   </div>
 </template>
@@ -25,6 +34,7 @@ import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import HomeBanner from "./../components/HomeBanner.vue";
 import Card from "./../components/Card.vue";
+import SearchSpots from "./../components/SearchSpots.vue";
 
 export default {
   name: "Home",
@@ -32,6 +42,7 @@ export default {
     VueSlickCarousel,
     HomeBanner,
     Card,
+    SearchSpots,
   },
   data() {
     return {
