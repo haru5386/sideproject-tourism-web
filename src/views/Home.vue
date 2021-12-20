@@ -26,6 +26,7 @@
         <Card />
       </VueSlickCarousel>
     </section>
+    <Footer />
   </div>
 </template>
 
@@ -35,6 +36,22 @@ import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import HomeBanner from "./../components/HomeBanner.vue";
 import Card from "./../components/Card.vue";
 import SearchSpots from "./../components/SearchSpots.vue";
+import Footer from "./../components/Footer.vue";
+
+window.onscroll = function () {
+    // 滾動時當前位置距頂部的距離
+    var topScroll = document.documentElement.scrollTop;
+    console.log(topScroll)
+    var nav = document.getElementById("navbar");
+    console.log(nav)
+    if (topScroll > 60) {
+        nav.style.position = 'fixed';
+        nav.style.top = '0';
+        nav.style.zIndex = '99'
+    } else {
+        nav.style = ''
+    }
+}
 
 export default {
   name: "Home",
@@ -43,6 +60,7 @@ export default {
     HomeBanner,
     Card,
     SearchSpots,
+    Footer,
   },
   data() {
     return {

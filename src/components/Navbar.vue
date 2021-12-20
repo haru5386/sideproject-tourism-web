@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav>
+    <nav id="navbar">
       <label class="navbar-toggle-label" for="navbar-toggle">
         <svg
           xmlns="http://www.w3.org/2000/svg"
