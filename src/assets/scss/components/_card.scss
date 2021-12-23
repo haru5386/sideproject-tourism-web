@@ -21,6 +21,13 @@
 .card-slide {
   width: 100%;
   padding: 10px;
+  margin: 10px 0;
+  @include computer {
+    width: 33%;
+  }
+  @include pad {
+    width: 50%;
+  }
 }
 .card {
   display: inline-block;
@@ -50,16 +57,8 @@
     }
     .favorite{
       position: absolute;
-      height: 40px;
-      width: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       right: 10px;
       top: 10px;
-      border-radius: 50%;
-      border: 1px solid $primary-color;
-      background-color: $white;
     }
   }
   .card-bottom{
@@ -75,10 +74,6 @@
     .tag-area {
       margin-top: 10px;
     }
-    .star {
-      svg {
-        margin-right: 3px;
-      }
-    }
+
   }
 }

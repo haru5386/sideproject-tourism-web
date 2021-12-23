@@ -154,10 +154,17 @@ h2 {
 
 h3 {
   font-size: 2rem;
+  letter-spacing: 2px;
 }
 
 h4 {
   font-size: 1.4rem;
+  letter-spacing: 2px;
+}
+
+p {
+  letter-spacing: 1px;
+
 }
 
 .btn {
@@ -233,4 +240,25 @@ input {
 
 .slick-prev:before:hover, .slick-next:before:hover {
   opacity: 1;
+}
+
+.my-auto {
+  margin: 0 auto;
+}
+
+.favorite{
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px solid $primary-color;
+  background-color: $white;
+}
+
+.star {
+  svg {
+    margin-right: 3px;
+  }
 }

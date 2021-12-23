@@ -1,0 +1,77 @@
+.spot {
+  max-width: 1200px;
+  margin: 40px auto;
+  text-align-last: left;
+  h3 {
+    color: $primary-800;
+    font-size: 1.4rem;
+  }
+  p {
+    color: $gray-600;
+    margin-top: 8px;
+    margin-bottom: 16px;
+  }
+  .title-bar {
+    margin: 40px auto;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      h1 {
+        font-size: 1.7rem;
+        @include computer {
+          font-size: 2.3rem;
+        }
+      }
+      .tag-area {
+        margin-top: 10px;
+      }
+    }
+    .phone {
+      display: flex;
+      .favorite {
+        margin-left: 10px;
+      }
+    }
+  }
+  .spot-info {
+    @include computer {
+      display: flex;
+      margin: 0 auto;
+      width: 90%;
+    }
+    .pic {
+      height: 300px;
+      overflow: hidden;
+      position: relative;
+      @include computer {
+        width: 60%;
+        order:2;
+        height: auto;
+      }
+      img {
+        position: absolute;
+        height: auto;
+        width: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+
+      }
+    }
+    .info {
+      margin: 28px auto 10px auto;
+      width: 90%;
+      @include computer {
+        width: 40%;
+        order: 1;
+        margin: 0px 20px 0 0;
+        border: 1px solid $gray-400;
+        border-radius: 5px;
+        padding: 20px;
+      }
+    }
+  }
+}

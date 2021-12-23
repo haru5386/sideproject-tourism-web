@@ -14,7 +14,7 @@
       </VueSlickCarousel>
     </section>
     <SearchSpots />
-        <section class="rainbow-life">
+    <section class="rainbow-life">
       <div class="title d-flex justify-content-between align-items-center">
         <h3>Rainbow Life!</h3>
         <div class="btn btn-filled">查看更多</div>
@@ -26,7 +26,6 @@
         <Card />
       </VueSlickCarousel>
     </section>
-    <Footer />
   </div>
 </template>
 
@@ -36,22 +35,36 @@ import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import HomeBanner from "./../components/HomeBanner.vue";
 import Card from "./../components/Card.vue";
 import SearchSpots from "./../components/SearchSpots.vue";
-import Footer from "./../components/Footer.vue";
+
 
 window.onscroll = function () {
-    // 滾動時當前位置距頂部的距離
-    var topScroll = document.documentElement.scrollTop;
-    console.log(topScroll)
-    var nav = document.getElementById("navbar");
-    console.log(nav)
-    if (topScroll > 60) {
-        nav.style.position = 'fixed';
-        nav.style.top = '0';
-        nav.style.zIndex = '99'
+  // navBar固定
+  let topScroll = document.documentElement.scrollTop;
+  let nav = document.getElementById("navbar");
+  if (topScroll > 30) {
+    nav.style.position = "fixed";
+    nav.style.top = "0";
+    nav.style.zIndex = "99";
+  } else {
+    nav.style = "";
+  }
+  // spots banner固定
+  let spotsBanner = document.getElementById("spots-banner");
+  let spotsTitle = document.getElementById("spots-title");
+  if (spotsBanner) {
+    if (topScroll > 30) {
+      spotsBanner.style.height = "80px";
+      spotsBanner.style.position = "fixed";
+      spotsBanner.style.top = "60px";
+      spotsBanner.style.zIndex = "99";
+      spotsTitle.classList.add("after-scroll");
     } else {
-        nav.style = ''
+      spotsBanner.style.height = "172px";
+      spotsTitle.classList.remove("after-scroll");
+      spotsBanner.style.position = "static";
     }
-}
+  }
+};
 
 export default {
   name: "Home",
@@ -60,7 +73,7 @@ export default {
     HomeBanner,
     Card,
     SearchSpots,
-    Footer,
+    
   },
   data() {
     return {
@@ -71,7 +84,7 @@ export default {
         slidesToShow: 3,
         slidesToScroll: 1,
         swipeToSlide: true,
-        prevArrow:"<div class='btn'>></div>",
+        prevArrow: "<div class='btn'>></div>",
         responsive: [
           {
             breakpoint: 1000,
