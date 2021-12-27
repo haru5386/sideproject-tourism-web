@@ -46,8 +46,58 @@
   .card-apots-area {
     display: flex;
     flex-wrap: wrap;
-    width: 90%;
+    width: 100%;
+    max-width: 1200px;
     justify-content:flex-start;
     margin-top: 20px;
+  }
+  .spots-map {
+    @include computer {
+      display: flex;
+      margin: 40px auto;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .card-area::-webkit-scrollbar {
+     width: 0.5em;
+    }
+      
+    .card-area::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgba(255, 255, 255, 0);
+    }
+      
+    .card-area::-webkit-scrollbar-thumb {
+      background-color: $gray-200;
+      border-radius: 0.35em;
+    }
+    .card-area {
+      display: none;
+      @include computer {
+        height: 600px;
+        width: 40%;
+        display: block;
+        margin-right: 10px;
+        overflow-y: scroll;
+      }
+    }
+    .map {
+      height: 600px;
+      width: 100%;
+      @include computer{
+        width: 60%;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .img {
+        width: 150px;
+        height: 120px;
+        padding: 4px;
+        overflow: hidden;
+        img {
+          height: 100%;
+          width: auto;
+        }
+      }
+    }
   }
 }

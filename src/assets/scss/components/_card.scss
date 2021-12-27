@@ -18,16 +18,18 @@
     width: 100%;
   }
 }
-.card-slide {
+.card-rwd-width {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
   @include computer {
     width: 33%;
   }
   @include pad {
     width: 50%;
   }
+}
+.card-slide {
+  padding: 10px;
+  margin: 10px 0;
 }
 .card {
   display: inline-block;

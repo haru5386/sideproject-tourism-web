@@ -52,7 +52,7 @@ window.onscroll = function () {
   let spotsBanner = document.getElementById("spots-banner");
   let spotsTitle = document.getElementById("spots-title");
   if (spotsBanner) {
-    if (topScroll > 30) {
+    if (topScroll > 200) {
       spotsBanner.style.height = "80px";
       spotsBanner.style.position = "fixed";
       spotsBanner.style.top = "60px";

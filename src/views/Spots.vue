@@ -32,7 +32,11 @@
                 />
               </svg>
             </button>
-            <div class="btn btn-filled">
+            <div
+              v-if="listMode"
+              class="btn btn-filled"
+              @click="mapModeChange()"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="10"
@@ -45,17 +49,42 @@
                 />
               </svg>
             </div>
+            <div v-else class="btn btn-filled" @click="listModeChange()">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="10"
+                viewBox="0 0 12 10"
+                fill="none"
+              >
+                <path
+                  d="M5.41667 0.333344H11.25V1.50001H5.41667V0.333344ZM5.41667 2.66668H8.91667V3.83334H5.41667V2.66668ZM5.41667 6.16668H11.25V7.33334H5.41667V6.16668ZM5.41667 8.50001H8.91667V9.66668H5.41667V8.50001ZM0.75 0.333344H4.25V3.83334H0.75V0.333344ZM1.91667 1.50001V2.66668H3.08333V1.50001H1.91667ZM0.75 6.16668H4.25V9.66668H0.75V6.16668ZM1.91667 7.33334V8.50001H3.08333V7.33334H1.91667Z"
+                  fill="#F0F0F0"
+                />
+              </svg>
+            </div>
           </div>
         </form>
       </div>
     </div>
-    <div class="d-flex justify-content-center">
+    <div v-if="listMode" class="d-flex justify-content-center">
       <div class="card-apots-area">
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+        <Card class="card-rwd-width" />
+        <Card class="card-rwd-width" />
+        <Card class="card-rwd-width" />
+        <Card class="card-rwd-width" />
+        <Card class="card-rwd-width" />
+      </div>
+    </div>
+    <div v-else>
+      <div class="spots-map">
+        <div class="card-area">
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+        <Map />
       </div>
     </div>
   </div>
@@ -63,11 +92,12 @@
 
 <script>
 import Card from "../components/Card.vue";
-
+import Map from "../components/Map.vue";
 
 export default {
   components: {
     Card,
+    Map,
   },
   data() {
     return {
@@ -96,10 +126,18 @@ export default {
         { text: "澎湖縣", value: "PenghuCounty" },
         { text: "連江縣", value: "LienchiangCounty" },
       ],
+      listMode: false,
     };
   },
+  mounted() {},
   methods: {
     async handleSubmit() {},
+    listModeChange() {
+      this.listMode = true;
+    },
+    mapModeChange() {
+      this.listMode = false;
+    },
   },
 };
 </script>
