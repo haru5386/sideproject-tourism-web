@@ -1,31 +1,36 @@
 <template>
   <div class="home">
-    <HomeBanner />
-    <section class="hot-spots">
-      <div class="title d-flex justify-content-between align-items-center">
-        <h3>熱門打卡景點</h3>
-        <div class="btn btn-filled">查看更多</div>
-      </div>
-      <VueSlickCarousel :arrows="true" v-bind="settings" class="card-area">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-      </VueSlickCarousel>
-    </section>
-    <SearchSpots />
-    <section class="rainbow-life">
-      <div class="title d-flex justify-content-between align-items-center">
-        <h3>Rainbow Life!</h3>
-        <div class="btn btn-filled">查看更多</div>
-      </div>
-      <VueSlickCarousel :arrows="true" v-bind="settings" class="card-area">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-      </VueSlickCarousel>
-    </section>
+    <Spinner v-if="isLoading" />
+    <template v-else>
+      <HomeBanner />
+      <section class="hot-spots">
+        <div class="title d-flex justify-content-between align-items-center">
+          <h3>熱門打卡景點</h3>
+          <router-link :to="{path: '/spots'}" class="btn btn-filled">查看更多</router-link>
+        </div>
+        <VueSlickCarousel :arrows="true" v-bind="settings" class="card-area">
+          <Card
+            v-for="ScenicSpot in ScenicSpotTop5"
+            :key="ScenicSpot.ScenicSpotID"
+            :ScenicSpot="ScenicSpot"
+          />
+        </VueSlickCarousel>
+      </section>
+      <SearchSpots />
+      <section class="rainbow-life">
+        <div class="title d-flex justify-content-between align-items-center">
+          <h3>Rainbow Life!</h3>
+          <router-link :to="{path: '/spots'}" class="btn btn-filled">查看更多</router-link>
+        </div>
+        <VueSlickCarousel :arrows="true" v-bind="settings" class="card-area">
+          <Card
+            v-for="ScenicSpot in ScenicSpot6To10"
+            :key="ScenicSpot.ScenicSpotID"
+            :ScenicSpot="ScenicSpot"
+          />
+        </VueSlickCarousel>
+      </section>
+    </template>
   </div>
 </template>
 
@@ -35,7 +40,8 @@ import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import HomeBanner from "./../components/HomeBanner.vue";
 import Card from "./../components/Card.vue";
 import SearchSpots from "./../components/SearchSpots.vue";
-
+import Spinner from "./../components/Spinner.vue";
+import scenicSpotAPI from "../apis/scenicSpot";
 
 window.onscroll = function () {
   // navBar固定
@@ -73,7 +79,7 @@ export default {
     HomeBanner,
     Card,
     SearchSpots,
-    
+    Spinner
   },
   data() {
     return {
@@ -103,7 +109,27 @@ export default {
           },
         ],
       },
+      ScenicSpotTop5: [],
+      ScenicSpot6To10: [],
+      isLoading: true,
     };
+  },
+  created() {
+    this.fetchScenicSpotTop5();
+  },
+  methods: {
+    async fetchScenicSpotTop5() {
+      try {
+        const res = await scenicSpotAPI.getScenicSpotTop10();
+        console.log(res.data);
+        this.ScenicSpotTop5 = res.data.slice(0,5);
+        this.ScenicSpot6To10 = res.data.slice(5,10);
+        this.isLoading = false
+      } catch (err) {
+        this.isLoading = false
+        console.log(err);
+      }
+    }
   },
 };
 </script>

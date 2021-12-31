@@ -3,8 +3,8 @@
     <div class="card">
       <div class="card-top">
         <img
-          src="https://images.unsplash.com/photo-1639850799718-558924c8a5ef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1351&q=80"
-          alt=""
+          :src="ScenicSpot.Picture.PictureUrl1"
+          :alt="ScenicSpot.Picture.PictureDescription1"
         />
         <div class="favorite">
           <svg
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="card-bottom">
-        <h4>新北市歡樂耶誕城</h4>
+        <h4>{{ ScenicSpot.ScenicSpotName }}</h4>
         <div class="star">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -94,3 +94,17 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    ScenicSpot: {
+      type: Object,
+      required: true,
+      default: function () {
+        return { message: "hello" };
+      },
+    },
+  },
+};
+</script>
