@@ -79,7 +79,7 @@
           <div class="card-area">
           <Card v-for="ScenicSpot in ScenicSpots" :key="ScenicSpot.ScenicSpotID" :ScenicSpot ="ScenicSpot" />
           </div>
-          <Map />
+          <Map :ScenicSpots ="ScenicSpots"/>
         </div>
       </div>
     </template>
@@ -126,7 +126,7 @@ export default {
         { text: "澎湖縣", value: "PenghuCounty" },
         { text: "連江縣", value: "LienchiangCounty" },
       ],
-      listMode: true,
+      listMode: false,
       ScenicSpots:'',
       isLoading: true
     };

@@ -29,19 +29,19 @@
 <script>
 export default {
   name: "AddGoogleMap",
+    props: {
+    ScenicSpots: {
+      type: Array,
+      required: true,
+      default: function () {
+        return { message: "hello" };
+      },
+    },
+  },
+  
   data() {
     return {
-      markers: [
-        {
-          position: { lat: 25.033671, lng: 121.564427 },
-          infoText:
-            "<div class='img'><img src='https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_7927_32.jpg'  alt='台北101'></div><h4 style='font-size: 1rem;'>台北101</h4>",
-        },
-        {
-          position: { lat: 25.0325917, lng: 121.5624999 },
-          infoText: "<div class='img'><img src='https://photo.travelking.com.tw/scenery/1F8576A4-EFD5-494E-B117-9F89E5A9A9C6_e.jpg'  alt='捷運世貿站'></div><h4 style='font-size: 1rem;'>捷運世貿站</h4>",
-        },
-      ],
+      markers: [],
       center: { lat: 25.033671, lng: 121.564427 },
       options: {
         mapTypeControl: false,
@@ -66,10 +66,23 @@ export default {
       },
     };
   },
+  created() {
+    this.fetchScenicSpots()
+  },
   methods: {
-    toggleInfoWindow: function (marker, idx) {
+    fetchScenicSpots(){
+      this.center = { lat: this.ScenicSpots[0].Position.PositionLat, lng:  this.ScenicSpots[0].Position.PositionLon }
+      this.markers = this.ScenicSpots.map(ScenicSpot => {
+        return {
+          position: { lat: ScenicSpot.Position.PositionLat, lng:  ScenicSpot.Position.PositionLon },
+          infoText: `<div class='img'><img src='${ScenicSpot.Picture.PictureUrl1}'  alt='${ScenicSpot.Picture.PictureDescription1}'></div><h4 style='font-size: 1rem;'>${ScenicSpot.ScenicSpotName}</h4>`
+        }
+      })
+    },
+    toggleInfoWindow(marker, idx) {
       this.infoWindowPos = marker.position;
       this.infoOptions.content = marker.infoText;
+      this.center = marker.position;
       if (this.currentIdx == idx) {
         this.infoWinOpen = !this.infoWinOpen;
       } else {
