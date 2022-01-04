@@ -6,7 +6,9 @@
       <section class="hot-spots">
         <div class="title d-flex justify-content-between align-items-center">
           <h3>熱門打卡景點</h3>
-          <router-link :to="{path: '/spots'}" class="btn btn-filled">查看更多</router-link>
+          <router-link :to="{ path: '/spots' }" class="btn btn-filled"
+            >查看更多</router-link
+          >
         </div>
         <VueSlickCarousel :arrows="true" v-bind="settings" class="card-area">
           <Card
@@ -20,7 +22,9 @@
       <section class="rainbow-life">
         <div class="title d-flex justify-content-between align-items-center">
           <h3>Rainbow Life!</h3>
-          <router-link :to="{path: '/spots'}" class="btn btn-filled">查看更多</router-link>
+          <router-link :to="{ path: '/spots' }" class="btn btn-filled"
+            >查看更多</router-link
+          >
         </div>
         <VueSlickCarousel :arrows="true" v-bind="settings" class="card-area">
           <Card
@@ -79,7 +83,7 @@ export default {
     HomeBanner,
     Card,
     SearchSpots,
-    Spinner
+    Spinner,
   },
   data() {
     return {
@@ -121,15 +125,29 @@ export default {
     async fetchScenicSpotTop5() {
       try {
         const res = await scenicSpotAPI.getScenicSpotTop10();
-        console.log(res.data);
-        this.ScenicSpotTop5 = res.data.slice(0,5);
-        this.ScenicSpot6To10 = res.data.slice(5,10);
-        this.isLoading = false
+        let rawData = res.data.map((data) => {
+          if (!data.Picture.PictureUrl1) {
+            return {
+              ...data,
+              Picture: {
+                PictureUrl1: require("@/assets/images/noimage.png"),
+                PictureDescription1: "圖片不存在",
+              },
+            };
+          } else {
+            return {
+              ...data
+            }
+          }
+        });
+        this.ScenicSpotTop5 = rawData.slice(0, 5);
+        this.ScenicSpot6To10 = rawData.slice(5, 10);
+        this.isLoading = false;
       } catch (err) {
-        this.isLoading = false
+        this.isLoading = false;
         console.log(err);
       }
-    }
+    },
   },
 };
 </script>

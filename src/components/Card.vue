@@ -2,10 +2,14 @@
   <div class="card-slide">
     <div class="card">
       <div class="card-top">
-        <img
-          :src="ScenicSpot.Picture.PictureUrl1"
-          :alt="ScenicSpot.Picture.PictureDescription1"
-        />
+        <router-link
+          :to="{ name: 'spot', params: { id: ScenicSpot.ScenicSpotID } }"
+        >
+          <img
+            :src="ScenicSpot.Picture.PictureUrl1"
+            :alt="ScenicSpot.Picture.PictureDescription1"
+          />
+        </router-link>
         <div class="favorite">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +26,11 @@
         </div>
       </div>
       <div class="card-bottom">
-        <h4>{{ ScenicSpot.ScenicSpotName }}</h4>
+        <router-link
+          :to="{ name: 'spot', params: { id: ScenicSpot.ScenicSpotID } }"
+        >
+          <h4>{{ ScenicSpot.ScenicSpotName }}</h4>
+        </router-link>
         <div class="star">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -101,6 +109,7 @@ export default {
     ScenicSpot: {
       type: Object,
       required: true,
+      // TODO:
       default: function () {
         return { message: "hello" };
       },

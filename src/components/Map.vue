@@ -33,6 +33,7 @@ export default {
     ScenicSpots: {
       type: Array,
       required: true,
+      // TODO:
       default: function () {
         return { message: "hello" };
       },

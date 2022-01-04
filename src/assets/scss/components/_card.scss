@@ -68,10 +68,13 @@
     flex-direction: column;
     align-items: start;
     margin: 20px;
-    h3 {
+    h4 {
       color: $gray-700;
       letter-spacing: 1px;
       font-weight: 700;
+    }
+    h4:hover {
+      color: $primary-800;
     }
     .tag-area {
       margin-top: 10px;
