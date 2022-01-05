@@ -89,6 +89,14 @@
         border-radius: 10px;
         overflow: hidden;
       }
+      h4 {
+        color: $gray-700;
+        letter-spacing: 1px;
+        font-weight: 700;
+      }
+      h4:hover {
+        color: $primary-800;
+      }
       .img {
         width: 150px;
         height: 120px;

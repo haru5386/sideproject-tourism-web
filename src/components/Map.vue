@@ -33,10 +33,6 @@ export default {
     ScenicSpots: {
       type: Array,
       required: true,
-      // TODO:
-      default: function () {
-        return { message: "hello" };
-      },
     },
   },
   
@@ -76,7 +72,7 @@ export default {
       this.markers = this.ScenicSpots.map(ScenicSpot => {
         return {
           position: { lat: ScenicSpot.Position.PositionLat, lng:  ScenicSpot.Position.PositionLon },
-          infoText: `<div class='img'><img src='${ScenicSpot.Picture.PictureUrl1}'  alt='${ScenicSpot.Picture.PictureDescription1}'></div><h4 style='font-size: 1rem;'>${ScenicSpot.ScenicSpotName}</h4>`
+          infoText: `<a href="#/spots/${ScenicSpot.ScenicSpotID}"><div class='img'><img src='${ScenicSpot.Picture.PictureUrl1}'  alt='${ScenicSpot.Picture.PictureDescription1}'></div><h4 style='font-size: 1rem;'>${ScenicSpot.ScenicSpotName}</h4></a>`
         }
       })
     },
