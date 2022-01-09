@@ -142,6 +142,8 @@
 <script>
 import scenicSpotAPI from "../apis/scenicSpot";
 import Spinner from "./../components/Spinner.vue";
+import { Toast } from './../utils/helpers'
+
 
 export default {
   components: {
@@ -183,6 +185,7 @@ export default {
     this.fetchScenicSpot(City, ScenicSpotID);
   },
   beforeRouteUpdate(to, from, next) {
+    console.log('beforeRouteUpdate',this.$route.params);
     const { city: City, id: ScenicSpotID } = to.params;
     this.fetchScenicSpot(City, ScenicSpotID);
     next();
@@ -222,6 +225,10 @@ export default {
       } catch (err) {
         this.isLoading = false;
         console.log(err);
+        Toast.fire({
+          icon: 'error',
+          title: '您搜尋的餐廳不存在。'
+      })
       }
     },
   },

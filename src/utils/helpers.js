@@ -1,5 +1,6 @@
 import jsSHA from "jssha";
 import axios from "axios"
+import Swal from 'sweetalert2'
 
 const baseURL = 'https://ptx.transportdata.tw/MOTC/v2/Tourism'
 
@@ -16,6 +17,13 @@ axiosInstance.interceptors.request.use(
 )
 
 export const apiHelper = axiosInstance
+
+export const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+})
 
 function getAuthorizationHeader() {
   //  填入自己 ID、KEY 開始

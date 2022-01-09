@@ -103,6 +103,7 @@ import Card from "../components/Card.vue";
 import Map from "../components/Map.vue";
 import scenicSpotAPI from "../apis/scenicSpot";
 import Spinner from "./../components/Spinner.vue";
+import { Toast } from './../utils/helpers'
 
 export default {
   components: {
@@ -200,16 +201,16 @@ export default {
       } catch (err) {
         this.isLoading = false;
         console.log(err);
+        this.city = []
+        Toast.fire({
+          icon: 'error',
+          title: '網頁發生錯誤。'
+      })
       }
     },
     async fetchCitySpot() {
-      try {
         this.city = this.selectCity
         this.$router.push({ path: "spots", query: { city: `${this.city}` } });
-      } catch (err) {
-        console.log(err);
-        this.isLoading = false;
-      }
     },
     listModeChange() {
       this.listMode = true;
