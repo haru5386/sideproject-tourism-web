@@ -16,7 +16,7 @@
           :to="{ name: 'spot', params: { id: ScenicSpot.ScenicSpotID } }"
         >
           <img
-            :src="ScenicSpot.Picture.PictureUrl1"
+            v-lazy="ScenicSpot.Picture.PictureUrl1"
             :alt="ScenicSpot.Picture.PictureDescription1"
           />
         </router-link>
