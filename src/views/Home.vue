@@ -13,8 +13,8 @@
         <VueSlickCarousel :arrows="true" v-bind="settings" class="card-area">
           <Card
             v-for="ScenicSpot in ScenicSpotTop5"
-            :key="ScenicSpot.ScenicSpotID"
-            :ScenicSpot="ScenicSpot"
+            :key="ScenicSpot.id"
+            :cardContent="ScenicSpot"
           />
         </VueSlickCarousel>
       </section>
@@ -29,8 +29,8 @@
         <VueSlickCarousel :arrows="true" v-bind="settings" class="card-area">
           <Card
             v-for="ScenicSpot in ScenicSpot6To10"
-            :key="ScenicSpot.ScenicSpotID"
-            :ScenicSpot="ScenicSpot"
+            :key="ScenicSpot.id"
+            :cardContent="ScenicSpot"
           />
         </VueSlickCarousel>
       </section>
@@ -125,21 +125,15 @@ export default {
     async fetchScenicSpotTop5() {
       try {
         const res = await scenicSpotAPI.getScenicSpotTop10();
-        let rawData = res.data.map((data) => {
-          if (!data.Picture.PictureUrl1) {
-            return {
-              ...data,
-              Picture: {
-                PictureUrl1: require("@/assets/images/noimage.png"),
-                PictureDescription1: "圖片不存在",
-              },
-            };
-          } else {
-            return {
-              ...data,
-            };
-          }
-        });
+          let rawData = res.data.map((data) => {
+            return{ 
+              id: data.ScenicSpotID,
+              name: data.ScenicSpotName,
+              pic: data.Picture.PictureUrl1 || require("@/assets/images/noimage.png"),
+              picDes: data.Picture.PictureDescription1 || "圖片不存在",
+              Position: data.Position
+            }
+          });
         this.ScenicSpotTop5 = rawData.slice(0, 5);
         this.ScenicSpot6To10 = rawData.slice(5, 10);
         this.isLoading = false;

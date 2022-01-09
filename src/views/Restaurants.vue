@@ -4,7 +4,7 @@
     <template v-else>
       <div id="spots-banner">
         <div id="spots-title" class="title">
-          <h1>景點列表</h1>
+          <h1>餐廳列表</h1>
           <form class="d-flex justify-content-between"
           @submit.stop.prevent="fetchCitySpot">
             <select v-model="selectCity">
@@ -74,8 +74,8 @@
         <div class="card-apots-area">
           <Card
             v-for="ScenicSpot in ScenicSpots"
-            :key="ScenicSpot.id"
-            :cardContent="ScenicSpot"
+            :key="ScenicSpot.ScenicSpotID"
+            :ScenicSpot="ScenicSpot"
             :City="city"
             class="card-rwd-width"
           />
@@ -86,8 +86,8 @@
           <div class="card-area">
             <Card
               v-for="ScenicSpot in ScenicSpots"
-              :key="ScenicSpot.id"
-              :cardContent="ScenicSpot"
+              :key="ScenicSpot.ScenicSpotID"
+              :ScenicSpot="ScenicSpot"
               :City="city"
             />
           </div>
@@ -101,7 +101,7 @@
 <script>
 import Card from "../components/Card.vue";
 import Map from "../components/Map.vue";
-import scenicSpotAPI from "../apis/scenicSpot";
+import restaurantAPI from "../apis/restaurant.js";
 import Spinner from "./../components/Spinner.vue";
 import { Toast } from './../utils/helpers'
 
@@ -159,33 +159,45 @@ export default {
         if (queryCity) {
           this.city = queryCity
           this.isLoading = true;
-          const res = await scenicSpotAPI.getCityScenicSpot(queryCity);
+          const res = await restaurantAPI.getCityRestaurant(queryCity);
           let rawData = res.data.map((data) => {
-            return{ 
-              id: data.ScenicSpotID,
-              name: data.ScenicSpotName,
-              pic: data.Picture.PictureUrl1 || require("@/assets/images/noimage.png"),
-              picDes: data.Picture.PictureDescription1 || "圖片不存在",
-              Position: data.Position
+            if (!data.Picture.PictureUrl1) {
+              return {
+                ...data,
+                Picture: {
+                  PictureUrl1: require("@/assets/images/noimage.png"),
+                  PictureDescription1: "圖片不存在",
+                },
+              };
+            } else {
+              return {
+                ...data,
+              };
             }
           });
           this.ScenicSpots = rawData;
           this.isLoading = false;
         } else {
           this.city = ""
-          const res = await scenicSpotAPI.getScenicSpotAll();
-          let rawData = res.data.map((data) => {
-            return{ 
-              id: data.ScenicSpotID,
-              name: data.ScenicSpotName,
-              pic: data.Picture.PictureUrl1 || require("@/assets/images/noimage.png"),
-              picDes: data.Picture.PictureDescription1 || "圖片不存在",
-              Position: data.Position
-            }
-          });
-          console.log(rawData)
-          this.ScenicSpots = rawData;
-          this.isLoading = false;
+          const res = await restaurantAPI.getRestaurantAll();
+          console.log(res.data)
+          // let rawData = res.data.map((data) => {
+          //   if (!data.Picture.PictureUrl1) {
+          //     return {
+          //       ...data,
+          //       Picture: {
+          //         PictureUrl1: require("@/assets/images/noimage.png"),
+          //         PictureDescription1: "圖片不存在",
+          //       },
+          //     };
+          //   } else {
+          //     return {
+          //       ...data,
+          //     };
+          //   }
+          // });
+          // this.ScenicSpots = rawData;
+          // this.isLoading = false;
         }
       } catch (err) {
         this.isLoading = false;

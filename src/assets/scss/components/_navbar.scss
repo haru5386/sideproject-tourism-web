@@ -48,6 +48,9 @@ header{
     justify-content: space-between;
     li {
       width: 30%;
+      a {
+        color: $primary-dark-color;
+      }
       svg{
         fill: $primary-dark-color
       }
