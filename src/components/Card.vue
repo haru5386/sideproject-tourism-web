@@ -3,6 +3,16 @@
     <div class="card">
       <div class="card-top">
         <router-link
+          v-if="City"
+          :to="{ name: 'city-spot', params: { city: City ,id: ScenicSpot.ScenicSpotID } }"
+        >
+          <img
+            :src="ScenicSpot.Picture.PictureUrl1"
+            :alt="ScenicSpot.Picture.PictureDescription1"
+          />
+        </router-link>
+        <router-link
+          v-else
           :to="{ name: 'spot', params: { id: ScenicSpot.ScenicSpotID } }"
         >
           <img
@@ -109,10 +119,10 @@ export default {
     ScenicSpot: {
       type: Object,
       required: true,
-      // TODO:
-      default: function () {
-        return { message: "hello" };
-      },
+    },
+    City: {
+      type: String,
+      required: false,
     },
   },
 };

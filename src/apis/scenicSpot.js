@@ -8,6 +8,9 @@ export default {
 },
   async getScenicSpotTop10() {
     return apiHelper.get('/ScenicSpot?%24top=10&%24format=JSON')
+  },
+  async getCityScenicSpot(city) {
+    return apiHelper.get(`/ScenicSpot/${city}?%24top=30&%24format=JSON`)
   }
 }
 

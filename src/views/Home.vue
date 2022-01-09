@@ -136,8 +136,8 @@ export default {
             };
           } else {
             return {
-              ...data
-            }
+              ...data,
+            };
           }
         });
         this.ScenicSpotTop5 = rawData.slice(0, 5);

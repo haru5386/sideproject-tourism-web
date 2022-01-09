@@ -34,6 +34,9 @@ export default {
       type: Array,
       required: true,
     },
+    City: {
+      type: String
+    }
   },
   
   data() {
@@ -72,7 +75,7 @@ export default {
       this.markers = this.ScenicSpots.map(ScenicSpot => {
         return {
           position: { lat: ScenicSpot.Position.PositionLat, lng:  ScenicSpot.Position.PositionLon },
-          infoText: `<a href="#/spots/${ScenicSpot.ScenicSpotID}"><div class='img'><img src='${ScenicSpot.Picture.PictureUrl1}'  alt='${ScenicSpot.Picture.PictureDescription1}'></div><h4 style='font-size: 1rem;'>${ScenicSpot.ScenicSpotName}</h4></a>`
+          infoText: `<a href="#/spots/${this.City}/${ScenicSpot.ScenicSpotID}"><div class='img'><img src='${ScenicSpot.Picture.PictureUrl1}'  alt='${ScenicSpot.Picture.PictureDescription1}'></div><h4 style='font-size: 1rem;'>${ScenicSpot.ScenicSpotName}</h4></a>`
         }
       })
     },

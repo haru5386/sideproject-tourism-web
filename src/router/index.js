@@ -17,11 +17,23 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/Spots.vue"),
   },
   {
+    path: "/spots/:city/:id",
+    name: "city-spot",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Spot.vue"),
+  },
+  {
     path: "/spots/:id",
     name: "spot",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Spot.vue"),
   },
+  // {
+  //   path: "/spots/:city/:id",
+  //   name: "spot",
+  //   component: () =>
+  //     import(/* webpackChunkName: "about" */ "../views/Spot.vue"),
+  // },
 ];
 
 const router = new VueRouter({

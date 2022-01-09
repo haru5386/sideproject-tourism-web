@@ -1,15 +1,13 @@
 <template>
   <div id="spots">
-  <Spinner v-if="isLoading" />
-  <template v-else>
+    <Spinner v-if="isLoading" />
+    <template v-else>
       <div id="spots-banner">
         <div id="spots-title" class="title">
           <h1>景點列表</h1>
-          <form
-            @submit.stop.prevent="handleSubmit"
-            class="d-flex justify-content-between"
-          >
-            <select v-model="city">
+          <form class="d-flex justify-content-between"
+          @submit.stop.prevent="fetchCitySpot">
+            <select v-model="selectCity">
               <option
                 v-for="city in cities"
                 :key="city.value"
@@ -19,7 +17,10 @@
               </option>
             </select>
             <div class="icon d-flex">
-              <button class="btn btn-filled mr-3" type="submit">
+              <button
+                class="btn btn-filled mr-3"
+                type="submit"
+              >
                 篩選
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -71,15 +72,26 @@
       </div>
       <div v-if="listMode" class="d-flex justify-content-center">
         <div class="card-apots-area">
-          <Card v-for="ScenicSpot in ScenicSpots" :key="ScenicSpot.ScenicSpotID" :ScenicSpot ="ScenicSpot" class="card-rwd-width" />
+          <Card
+            v-for="ScenicSpot in ScenicSpots"
+            :key="ScenicSpot.ScenicSpotID"
+            :ScenicSpot="ScenicSpot"
+            :City="city"
+            class="card-rwd-width"
+          />
         </div>
       </div>
       <div v-else>
         <div class="spots-map">
           <div class="card-area">
-          <Card v-for="ScenicSpot in ScenicSpots" :key="ScenicSpot.ScenicSpotID" :ScenicSpot ="ScenicSpot" />
+            <Card
+              v-for="ScenicSpot in ScenicSpots"
+              :key="ScenicSpot.ScenicSpotID"
+              :ScenicSpot="ScenicSpot"
+              :City="city"
+            />
           </div>
-          <Map :ScenicSpots ="ScenicSpots"/>
+          <Map :ScenicSpots="ScenicSpots" :City="city" />
         </div>
       </div>
     </template>
@@ -89,19 +101,19 @@
 <script>
 import Card from "../components/Card.vue";
 import Map from "../components/Map.vue";
-import scenicSpotAPI from "../apis/scenicSpot"
+import scenicSpotAPI from "../apis/scenicSpot";
 import Spinner from "./../components/Spinner.vue";
-
 
 export default {
   components: {
     Card,
     Map,
-    Spinner
+    Spinner,
   },
   data() {
     return {
-      city: '',
+      selectCity: "",
+      city: "",
       cities: [
         { text: "請選擇縣市", value: "" },
         { text: "台北市", value: "Taipei" },
@@ -126,28 +138,79 @@ export default {
         { text: "澎湖縣", value: "PenghuCounty" },
         { text: "連江縣", value: "LienchiangCounty" },
       ],
-      listMode: false,
-      ScenicSpots:'',
-      isLoading: true
+      listMode: true,
+      ScenicSpots: "",
+      isLoading: true,
     };
   },
   created() {
-    this.fetchScenicSpot();
+    const { city = "" } = this.$route.query;
+    this.fetchScenicSpot({ queryCity: city });
   },
-  mounted() {},
+  beforeRouteUpdate(to, from, next) {
+    const { city = "" } = to.query;
+    this.fetchScenicSpot({ queryCity: city });
+    next();
+  },
   methods: {
-     async fetchScenicSpot() {
-       try {
-         const res = await scenicSpotAPI.getScenicSpotAll()
-         console.log(res.data)
-         this.ScenicSpots = res.data
-         this.isLoading = false
-       }catch (err) {
-         this.isLoading = false
-         console.log(err)
-       }
+    async fetchScenicSpot({ queryCity }) {
+      try {
+        if (queryCity) {
+          this.city = queryCity
+          this.isLoading = true;
+          const res = await scenicSpotAPI.getCityScenicSpot(queryCity);
+          let rawData = res.data.map((data) => {
+            if (!data.Picture.PictureUrl1) {
+              return {
+                ...data,
+                Picture: {
+                  PictureUrl1: require("@/assets/images/noimage.png"),
+                  PictureDescription1: "圖片不存在",
+                },
+              };
+            } else {
+              return {
+                ...data,
+              };
+            }
+          });
+          this.ScenicSpots = rawData;
+          this.isLoading = false;
+        } else {
+          this.city = ""
+          const res = await scenicSpotAPI.getScenicSpotAll();
+          let rawData = res.data.map((data) => {
+            if (!data.Picture.PictureUrl1) {
+              return {
+                ...data,
+                Picture: {
+                  PictureUrl1: require("@/assets/images/noimage.png"),
+                  PictureDescription1: "圖片不存在",
+                },
+              };
+            } else {
+              return {
+                ...data,
+              };
+            }
+          });
+          this.ScenicSpots = rawData;
+          this.isLoading = false;
+        }
+      } catch (err) {
+        this.isLoading = false;
+        console.log(err);
+      }
     },
-    async handleSubmit() {},
+    async fetchCitySpot() {
+      try {
+        this.city = this.selectCity
+        this.$router.push({ path: "spots", query: { city: `${this.city}` } });
+      } catch (err) {
+        console.log(err);
+        this.isLoading = false;
+      }
+    },
     listModeChange() {
       this.listMode = true;
     },

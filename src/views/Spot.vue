@@ -4,7 +4,7 @@
     <template v-else>
       <div class="title-bar">
         <div class="title">
-          <h1>{{spot.ScenicSpotName}}</h1>
+          <h1>{{ spot.ScenicSpotName }}</h1>
           <div class="star">
             <div class="star">
               <svg
@@ -77,7 +77,9 @@
           </div>
         </div>
         <div class="phone">
-          <a :href="'tel:' + spot.Phone"><div class="btn btn-filled">撥打電話</div></a>
+          <a :href="'tel:' + spot.Phone"
+            ><div class="btn btn-filled">撥打電話</div></a
+          >
           <div class="favorite">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +107,7 @@
           <div class="about">
             <h3>關於</h3>
             <p>
-              {{ spot.Description}}
+              {{ spot.Description }}
             </p>
           </div>
           <div class="address">
@@ -114,14 +116,14 @@
           </div>
           <div class="time">
             <h3>開放時間</h3>
-            <p>{{ spot.OpenTime}}</p>
+            <p>{{ spot.OpenTime }}</p>
           </div>
         </div>
       </div>
       <div class="w-90 my-auto">
         <h3 class="mt-5">景點特色</h3>
         <p>
-{{spot.DescriptionDetail}}
+          {{ spot.DescriptionDetail }}
         </p>
       </div>
       <div class="w-90 my-auto">
@@ -130,7 +132,7 @@
       <div class="w-90 my-auto">
         <h3 class="mt-5">交通方式</h3>
         <p>
-        {{ spot.TravelInfo }}
+          {{ spot.TravelInfo }}
         </p>
       </div>
     </template>
@@ -158,7 +160,7 @@ export default {
         TravelInfo: "",
         OpenTime: "",
         Picture: {
-          PictureUrl1: require('@/assets/images/noimage.png'),
+          PictureUrl1: require("@/assets/images/noimage.png"),
           PictureDescription1: "",
         },
         Position: {
@@ -176,30 +178,47 @@ export default {
     };
   },
   created() {
-    const { id: ScenicSpotID } = this.$route.params;
-    this.fetchScenicSpot(ScenicSpotID);
+    console.log(this.$route.params);
+    const { city: City, id: ScenicSpotID } = this.$route.params;
+    this.fetchScenicSpot(City, ScenicSpotID);
   },
   beforeRouteUpdate(to, from, next) {
-    const { id: ScenicSpotID } = to.params;
-    this.fetchScenicSpot(ScenicSpotID);
+    const { city: City, id: ScenicSpotID } = to.params;
+    this.fetchScenicSpot(City, ScenicSpotID);
     next();
   },
   methods: {
-    async fetchScenicSpot(ScenicSpotID) {
+    async fetchScenicSpot(City, ScenicSpotID) {
       try {
-        const res = await scenicSpotAPI.getScenicSpotAll();
-        let rawData = res.data.filter(
-          (spot) => spot.ScenicSpotID === ScenicSpotID
-        )[0];
-        //如果沒有圖片的話
+        if (City) {
+          const res = await scenicSpotAPI.getCityScenicSpot(City);
+          let rawData = res.data.filter(
+            (spot) => spot.ScenicSpotID === ScenicSpotID
+          )[0];
+                  //如果沒有圖片的話
         if (!rawData.Picture.PictureUrl1) {
           rawData.Picture = {
-          PictureUrl1: require('@/assets/images/noimage.png'),
-          PictureDescription1: "圖片不存在",
+            PictureUrl1: require("@/assets/images/noimage.png"),
+            PictureDescription1: "圖片不存在",
+          };
         }
-        }
-        this.spot = rawData
+        this.spot = rawData;
         this.isLoading = false;
+        } else {
+          const res = await scenicSpotAPI.getScenicSpotAll();
+          let rawData = res.data.filter(
+            (spot) => spot.ScenicSpotID === ScenicSpotID
+          )[0];
+                  //如果沒有圖片的話
+        if (!rawData.Picture.PictureUrl1) {
+          rawData.Picture = {
+            PictureUrl1: require("@/assets/images/noimage.png"),
+            PictureDescription1: "圖片不存在",
+          };
+        }
+        this.spot = rawData;
+        this.isLoading = false;
+        }
       } catch (err) {
         this.isLoading = false;
         console.log(err);
