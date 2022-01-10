@@ -2,11 +2,11 @@
   <div id="spots">
     <Spinner v-if="isLoading" />
     <template v-else>
-      <div id="spots-banner">
+      <div id="spots-banner" class="restaurants-banner">
         <div id="spots-title" class="title">
           <h1>餐廳列表</h1>
           <form class="d-flex justify-content-between"
-          @submit.stop.prevent="fetchCitySpot">
+          @submit.stop.prevent="fetchCityRestaurants">
             <select v-model="selectCity">
               <option
                 v-for="city in cities"
@@ -73,9 +73,9 @@
       <div v-if="listMode" class="d-flex justify-content-center">
         <div class="card-apots-area">
           <Card
-            v-for="ScenicSpot in ScenicSpots"
-            :key="ScenicSpot.ScenicSpotID"
-            :ScenicSpot="ScenicSpot"
+            v-for="Restaurant in Restaurants"
+            :key="Restaurant.id"
+            :Restaurant="Restaurant"
             :City="city"
             class="card-rwd-width"
           />
@@ -85,13 +85,13 @@
         <div class="spots-map">
           <div class="card-area">
             <Card
-              v-for="ScenicSpot in ScenicSpots"
-              :key="ScenicSpot.ScenicSpotID"
-              :ScenicSpot="ScenicSpot"
+              v-for="Restaurant in Restaurants"
+              :key="Restaurant.id"
+              :Restaurant="Restaurant"
               :City="city"
             />
           </div>
-          <Map :ScenicSpots="ScenicSpots" :City="city" />
+          <Map :cardContents="Restaurants" :City="city" />
         </div>
       </div>
     </template>
@@ -99,9 +99,9 @@
 </template>
 
 <script>
-import Card from "../components/Card.vue";
-import Map from "../components/Map.vue";
-import restaurantAPI from "../apis/restaurant.js";
+import Card from "../components/RestaurantCard.vue";
+import Map from "../components/RestaurantMap.vue";
+import restaurantAPI from "../apis/restaurant";
 import Spinner from "./../components/Spinner.vue";
 import { Toast } from './../utils/helpers'
 
@@ -140,64 +140,51 @@ export default {
         { text: "連江縣", value: "LienchiangCounty" },
       ],
       listMode: true,
-      ScenicSpots: "",
+      Restaurants: "",
       isLoading: true,
     };
   },
   created() {
     const { city = "" } = this.$route.query;
-    this.fetchScenicSpot({ queryCity: city });
+    this.fetchRestaurants({ queryCity: city });
   },
   beforeRouteUpdate(to, from, next) {
     const { city = "" } = to.query;
-    this.fetchScenicSpot({ queryCity: city });
+    this.fetchRestaurants({ queryCity: city });
     next();
   },
   methods: {
-    async fetchScenicSpot({ queryCity }) {
+    async fetchRestaurants({ queryCity }) {
       try {
         if (queryCity) {
           this.city = queryCity
           this.isLoading = true;
           const res = await restaurantAPI.getCityRestaurant(queryCity);
           let rawData = res.data.map((data) => {
-            if (!data.Picture.PictureUrl1) {
-              return {
-                ...data,
-                Picture: {
-                  PictureUrl1: require("@/assets/images/noimage.png"),
-                  PictureDescription1: "圖片不存在",
-                },
-              };
-            } else {
-              return {
-                ...data,
-              };
+            return{ 
+              id: data.RestaurantID,
+              name: data.RestaurantName,
+              pic: data.Picture.PictureUrl1 || require("@/assets/images/noimage.png"),
+              picDes: data.Picture.PictureDescription1 || "圖片不存在",
+              Position: data.Position
             }
           });
-          this.ScenicSpots = rawData;
+          this.Restaurants = rawData;
           this.isLoading = false;
         } else {
           this.city = ""
           const res = await restaurantAPI.getRestaurantAll();
-          console.log(res.data)
-          // let rawData = res.data.map((data) => {
-          //   if (!data.Picture.PictureUrl1) {
-          //     return {
-          //       ...data,
-          //       Picture: {
-          //         PictureUrl1: require("@/assets/images/noimage.png"),
-          //         PictureDescription1: "圖片不存在",
-          //       },
-          //     };
-          //   } else {
-          //     return {
-          //       ...data,
-          //     };
-          //   }
-          // });
-          // this.ScenicSpots = rawData;
-          // this.isLoading = false;
+          let rawData = res.data.map((data) => {
+            return{ 
+              id: data.RestaurantID,
+              name: data.RestaurantName,
+              pic: data.Picture.PictureUrl1 || require("@/assets/images/noimage.png"),
+              picDes: data.Picture.PictureDescription1 || "圖片不存在",
+              Position: data.Position
+            }
+          });
+          this.Restaurants = rawData;
+          this.isLoading = false;
         }
       } catch (err) {
         this.isLoading = false;
@@ -209,9 +196,9 @@ export default {
       })
       }
     },
-    async fetchCitySpot() {
+    async fetchCityRestaurants() {
         this.city = this.selectCity
-        this.$router.push({ path: "spots", query: { city: `${this.city}` } });
+        this.$router.push({ path: "restaurants", query: { city: `${this.city}` } });
     },
     listModeChange() {
       this.listMode = true;

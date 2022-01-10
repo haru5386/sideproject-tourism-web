@@ -4,20 +4,20 @@
       <div class="card-top">
         <router-link
           v-if="City"
-          :to="{ name: 'city-spot', params: { city: City ,id: cardContent.id } }"
+          :to="{ name: 'city-restaurant', params: { city: City ,id: Restaurant.id } }"
         >
           <img
-            :src="cardContent.pic"
-            :alt="cardContent.picDes"
+            :src="Restaurant.pic"
+            :alt="Restaurant.picDes"
           />
         </router-link>
         <router-link
           v-else
-          :to="{ name: 'spot', params: { id: cardContent.id } }"
+          :to="{ name: 'restaurant', params: { id: Restaurant.id } }"
         >
           <img
-            v-lazy="cardContent.pic"
-            :alt="cardContent.picDes"
+            v-lazy="Restaurant.pic"
+            :alt="Restaurant.picDes"
           />
         </router-link>
         <div class="favorite">
@@ -37,9 +37,9 @@
       </div>
       <div class="card-bottom">
         <router-link
-          :to="{ name: 'spot', params: { id: cardContent.id } }"
+          :to="{ name: 'spot', params: { id: Restaurant.id } }"
         >
-          <h4>{{ cardContent.name }}</h4>
+          <h4>{{ Restaurant.name }}</h4>
         </router-link>
         <div class="star">
           <svg
@@ -116,7 +116,7 @@
 <script>
 export default {
   props: {
-    cardContent: {
+    Restaurant: {
       type: Object,
       required: true,
     },

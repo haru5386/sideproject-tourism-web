@@ -36,6 +36,18 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/Restaurants.vue"),
   },
   {
+    path: "/restaurants/:city/:id",
+    name: "city-restaurant",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Restaurant.vue"),
+  },
+  {
+    path: "/restaurants/:id",
+    name: "restaurant",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Restaurant.vue"),
+  },
+  {
     path: '*',
     name: 'not-found',
     component: NotFound

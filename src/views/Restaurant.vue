@@ -4,7 +4,7 @@
     <template v-else>
       <div class="title-bar">
         <div class="title">
-          <h1>{{ spot.ScenicSpotName }}</h1>
+          <h1>{{ restaurant.RestaurantName }}</h1>
           <div class="star">
             <div class="star">
               <svg
@@ -77,7 +77,7 @@
           </div>
         </div>
         <div class="phone">
-          <a :href="'tel:' + spot.Phone"
+          <a :href="'tel:' + restaurant.Phone"
             ><div class="btn btn-filled">撥打電話</div></a
           >
           <div class="favorite">
@@ -99,48 +99,41 @@
       <div class="spot-info">
         <div class="pic">
           <img
-            :src="spot.Picture.PictureUrl1"
-            :alt="spot.Picture.PictureDescription1"
+            :src="restaurant.Picture.PictureUrl1"
+            :alt="restaurant.Picture.PictureDescription1"
           />
         </div>
         <div class="info">
           <div class="about">
             <h3>關於</h3>
             <p>
-              {{ spot.Description }}
+              {{ restaurant.Description }}
             </p>
           </div>
           <div class="address">
             <h3>地址</h3>
-            <p>{{ spot.Address }}</p>
+            <p>{{ restaurant.Address }}</p>
           </div>
           <div class="time">
             <h3>開放時間</h3>
-            <p>{{ spot.OpenTime }}</p>
+            <p>{{ restaurant.OpenTime }}</p>
           </div>
         </div>
       </div>
       <div class="w-90 my-auto">
-        <h3 class="mt-5">景點特色</h3>
+        <h3 class="mt-5"></h3>
         <p>
-          {{ spot.DescriptionDetail }}
         </p>
       </div>
-      <div class="w-90 my-auto">
-        <h3 class="mt-5">服務設施</h3>
-      </div>
-      <div class="w-90 my-auto">
-        <h3 class="mt-5">交通方式</h3>
-        <p>
-          {{ spot.TravelInfo }}
-        </p>
+      <div class="w-90 my-auto" style="height: 200px">
+        <h3 class="mt-5"></h3>
       </div>
     </template>
   </div>
 </template>
 
 <script>
-import scenicSpotAPI from "../apis/scenicSpot";
+import restaurantAPI from "../apis/restaurant";
 import Spinner from "./../components/Spinner.vue";
 import { Toast } from './../utils/helpers'
 
@@ -151,15 +144,13 @@ export default {
   },
   data() {
     return {
-      spot: {
-        ScenicSpotID: -1,
-        ScenicSpotName: "",
-        DescriptionDetail: "",
+      restaurant: {
+        RestaurantID: -1,
+        RestaurantName: "",
         Description: "",
         Phone: "",
         Address: "",
         ZipCode: "",
-        TravelInfo: "",
         OpenTime: "",
         Picture: {
           PictureUrl1: require("@/assets/images/noimage.png"),
@@ -171,8 +162,6 @@ export default {
           GeoHash: "",
         },
         Class1: "",
-        Level: "",
-        ParkingPosition: {},
         SrcUpdateTime: "",
         UpdateTime: "",
       },
@@ -181,22 +170,22 @@ export default {
   },
   created() {
     console.log(this.$route.params);
-    const { city: City, id: ScenicSpotID } = this.$route.params;
-    this.fetchScenicSpot(City, ScenicSpotID);
+    const { city: City, id: RestaurantID } = this.$route.params;
+    this.fetchRestaurant(City, RestaurantID);
   },
   beforeRouteUpdate(to, from, next) {
     console.log('beforeRouteUpdate',this.$route.params);
-    const { city: City, id: ScenicSpotID } = to.params;
-    this.fetchScenicSpot(City, ScenicSpotID);
+    const { city: City, id: RestaurantID } = to.params;
+    this.fetchRestaurant(City, RestaurantID);
     next();
   },
   methods: {
-    async fetchScenicSpot(City, ScenicSpotID) {
+    async fetchRestaurant(City, RestaurantID) {
       try {
         if (City) {
-          const res = await scenicSpotAPI.getCityScenicSpot(City);
+          const res = await restaurantAPI.getCityRestaurant(City);
           let rawData = res.data.filter(
-            (spot) => spot.ScenicSpotID === ScenicSpotID
+            (restaurant) => restaurant.RestaurantID === RestaurantID
           )[0];
                   //如果沒有圖片的話
         if (!rawData.Picture.PictureUrl1) {
@@ -205,12 +194,12 @@ export default {
             PictureDescription1: "圖片不存在",
           };
         }
-        this.spot = rawData;
+        this.restaurant = rawData;
         this.isLoading = false;
         } else {
-          const res = await scenicSpotAPI.getScenicSpotAll();
+          const res = await restaurantAPI.getRestaurantAll();
           let rawData = res.data.filter(
-            (spot) => spot.ScenicSpotID === ScenicSpotID
+            (restaurant) => restaurant.RestaurantID === RestaurantID
           )[0];
                   //如果沒有圖片的話
         if (!rawData.Picture.PictureUrl1) {
@@ -219,7 +208,7 @@ export default {
             PictureDescription1: "圖片不存在",
           };
         }
-        this.spot = rawData;
+        this.restaurant = rawData;
         this.isLoading = false;
         }
       } catch (err) {
@@ -227,7 +216,7 @@ export default {
         console.log(err);
         Toast.fire({
           icon: 'error',
-          title: '您搜尋的景點不存在。'
+          title: '您搜尋的餐廳不存在。'
       })
       }
     },

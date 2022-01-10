@@ -17,8 +17,8 @@ Vue.use(VueGoogleMaps, {
 
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-  error: 'dist/error.png',
-  loading: 'dist/loading.gif',
+  error: require('./assets/images/loading-pic.png'),
+  loading: require('./assets/images/loading-pic.png'),
   attempt: 1
 })
 

@@ -2,7 +2,7 @@
   <div id="spots">
     <Spinner v-if="isLoading" />
     <template v-else>
-      <div id="spots-banner">
+      <div id="spots-banner" class="spots-banner">
         <div id="spots-title" class="title">
           <h1>景點列表</h1>
           <form class="d-flex justify-content-between"
@@ -75,7 +75,7 @@
           <Card
             v-for="ScenicSpot in ScenicSpots"
             :key="ScenicSpot.id"
-            :cardContent="ScenicSpot"
+            :ScenicSpot="ScenicSpot"
             :City="city"
             class="card-rwd-width"
           />
@@ -87,11 +87,11 @@
             <Card
               v-for="ScenicSpot in ScenicSpots"
               :key="ScenicSpot.id"
-              :cardContent="ScenicSpot"
+              :ScenicSpot="ScenicSpot"
               :City="city"
             />
           </div>
-          <Map :ScenicSpots="ScenicSpots" :City="city" />
+          <Map :cardContents="ScenicSpots" :City="city" />
         </div>
       </div>
     </template>
@@ -99,8 +99,8 @@
 </template>
 
 <script>
-import Card from "../components/Card.vue";
-import Map from "../components/Map.vue";
+import Card from "../components/SceneSpotCard.vue";
+import Map from "../components/SceneSpotMap.vue";
 import scenicSpotAPI from "../apis/scenicSpot";
 import Spinner from "./../components/Spinner.vue";
 import { Toast } from './../utils/helpers'

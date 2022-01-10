@@ -30,7 +30,7 @@
 export default {
   name: "AddGoogleMap",
     props: {
-    ScenicSpots: {
+    cardContents: {
       type: Array,
       required: true,
     },
@@ -67,15 +67,15 @@ export default {
     };
   },
   created() {
-    this.fetchScenicSpots()
+    this.fetchcardContents()
   },
   methods: {
-    fetchScenicSpots(){
-      this.center = { lat: this.ScenicSpots[0].Position.PositionLat, lng:  this.ScenicSpots[0].Position.PositionLon }
-      this.markers = this.ScenicSpots.map(ScenicSpot => {
+    fetchcardContents(){
+      this.center = { lat: this.cardContents[0].Position.PositionLat, lng:  this.cardContents[0].Position.PositionLon }
+      this.markers = this.cardContents.map(cardContent => {
         return {
-          position: { lat: ScenicSpot.Position.PositionLat, lng:  ScenicSpot.Position.PositionLon },
-          infoText: `<a href="#/spots/${this.City}/${ScenicSpot.id}"><div class='img'><img src='${ScenicSpot.pic}'  alt='${ScenicSpot.picDes}'></div><h4 style='font-size: 1rem;'>${ScenicSpot.name}</h4></a>`
+          position: { lat: cardContent.Position.PositionLat, lng:  cardContent.Position.PositionLon },
+          infoText: `<a href="#/restaurants/${this.City}/${cardContent.id}"><div class='img'><img src='${cardContent.pic}'  alt='${cardContent.picDes}'></div><h4 style='font-size: 1rem;'>${cardContent.name}</h4></a>`
         }
       })
     },

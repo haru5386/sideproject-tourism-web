@@ -14,7 +14,7 @@
           <Card
             v-for="ScenicSpot in ScenicSpotTop5"
             :key="ScenicSpot.id"
-            :cardContent="ScenicSpot"
+            :ScenicSpot="ScenicSpot"
           />
         </VueSlickCarousel>
       </section>
@@ -30,7 +30,7 @@
           <Card
             v-for="ScenicSpot in ScenicSpot6To10"
             :key="ScenicSpot.id"
-            :cardContent="ScenicSpot"
+            :ScenicSpot="ScenicSpot"
           />
         </VueSlickCarousel>
       </section>
@@ -42,7 +42,7 @@
 import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import HomeBanner from "./../components/HomeBanner.vue";
-import Card from "./../components/Card.vue";
+import Card from "../components/SceneSpotCard.vue";
 import SearchSpots from "./../components/SearchSpots.vue";
 import Spinner from "./../components/Spinner.vue";
 import scenicSpotAPI from "../apis/scenicSpot";
