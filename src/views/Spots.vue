@@ -71,7 +71,7 @@
         </div>
       </div>
       <div v-if="listMode" class="d-flex justify-content-center">
-        <div class="card-apots-area">
+        <div class="card-spots-area">
           <Card
             v-for="ScenicSpot in ScenicSpots"
             :key="ScenicSpot.id"

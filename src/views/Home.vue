@@ -66,7 +66,7 @@ window.onscroll = function () {
       spotsBanner.style.height = "80px";
       spotsBanner.style.position = "fixed";
       spotsBanner.style.top = "60px";
-      spotsBanner.style.zIndex = "99";
+      spotsBanner.style.zIndex = "10";
       spotsTitle.classList.add("after-scroll");
     } else {
       spotsBanner.style.height = "172px";

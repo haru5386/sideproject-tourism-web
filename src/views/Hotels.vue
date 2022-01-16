@@ -4,9 +4,9 @@
     <template v-else>
       <div id="spots-banner" class="restaurants-banner">
         <div id="spots-title" class="title">
-          <h1>餐廳列表</h1>
+          <h1>飯店列表</h1>
           <form class="d-flex justify-content-between"
-          @submit.stop.prevent="fetchCityRestaurants">
+          @submit.stop.prevent="fetchCityHotels">
             <select v-model="selectCity">
               <option
                 v-for="city in cities"
@@ -73,9 +73,9 @@
       <div v-if="listMode" class="d-flex justify-content-center">
         <div class="card-spots-area">
           <Card
-            v-for="Restaurant in Restaurants"
-            :key="Restaurant.id"
-            :Restaurant="Restaurant"
+            v-for="Hotel in Hotels"
+            :key="Hotel.id"
+            :Hotel="Hotel"
             :City="city"
             class="card-rwd-width"
           />
@@ -85,13 +85,13 @@
         <div class="spots-map">
           <div class="card-area">
             <Card
-              v-for="Restaurant in Restaurants"
-              :key="Restaurant.id"
-              :Restaurant="Restaurant"
+              v-for="Hotel in Hotels"
+              :key="Hotel.id"
+              :Hotel="Hotel"
               :City="city"
             />
           </div>
-          <Map :cardContents="Restaurants" :City="city" />
+          <Map :cardContents="Hotels" :City="city" />
         </div>
       </div>
     </template>
@@ -99,11 +99,11 @@
 </template>
 
 <script>
-import Card from "../components/RestaurantCard.vue";
-import Map from "../components/RestaurantMap.vue";
-import restaurantAPI from "../apis/restaurant";
-import Spinner from "./../components/Spinner.vue";
-import { Toast } from './../utils/helpers'
+import Card from "../components/HotelCard.vue";
+import Map from "../components/HotelMap.vue";
+import hotelAPI from "../apis/hotel";
+import Spinner from "../components/Spinner.vue";
+import { Toast } from '../utils/helpers'
 
 export default {
   components: {
@@ -140,50 +140,50 @@ export default {
         { text: "連江縣", value: "LienchiangCounty" },
       ],
       listMode: true,
-      Restaurants: "",
+      Hotels: "",
       isLoading: true,
     };
   },
   created() {
     const { city = "" } = this.$route.query;
-    this.fetchRestaurants({ queryCity: city });
+    this.fetchHotels({ queryCity: city });
   },
   beforeRouteUpdate(to, from, next) {
     const { city = "" } = to.query;
-    this.fetchRestaurants({ queryCity: city });
+    this.fetchHotels({ queryCity: city });
     next();
   },
   methods: {
-    async fetchRestaurants({ queryCity }) {
+    async fetchHotels({ queryCity }) {
       try {
         if (queryCity) {
           this.city = queryCity
           this.isLoading = true;
-          const res = await restaurantAPI.getCityRestaurant(queryCity);
+          const res = await hotelAPI.getCityHotel(queryCity);
           let rawData = res.data.map((data) => {
             return{ 
-              id: data.RestaurantID,
-              name: data.RestaurantName,
+              id: data.HotelID,
+              name: data.HotelName,
               pic: data.Picture.PictureUrl1 || require("@/assets/images/noimage.png"),
               picDes: data.Picture.PictureDescription1 || "圖片不存在",
               Position: data.Position
             }
           });
-          this.Restaurants = rawData;
+          this.Hotels = rawData;
           this.isLoading = false;
         } else {
           this.city = ""
-          const res = await restaurantAPI.getRestaurantAll();
+          const res = await hotelAPI.getHotelAll();
           let rawData = res.data.map((data) => {
             return{ 
-              id: data.RestaurantID,
-              name: data.RestaurantName,
+              id: data.HotelID,
+              name: data.HotelName,
               pic: data.Picture.PictureUrl1 || require("@/assets/images/noimage.png"),
               picDes: data.Picture.PictureDescription1 || "圖片不存在",
               Position: data.Position
             }
           });
-          this.Restaurants = rawData;
+          this.Hotels = rawData;
           this.isLoading = false;
         }
       } catch (err) {
@@ -196,9 +196,9 @@ export default {
       })
       }
     },
-    async fetchCityRestaurants() {
+    async fetchCityHotels() {
         this.city = this.selectCity
-        this.$router.push({ path: "restaurants", query: { city: `${this.city}` } });
+        this.$router.push({ path: "hotels", query: { city: `${this.city}` } });
     },
     listModeChange() {
       this.listMode = true;
