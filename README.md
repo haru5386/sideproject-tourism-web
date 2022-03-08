@@ -10,8 +10,8 @@ The F2E 3rd 參賽作品 - 台灣旅遊景點導覽 ( UI designer: Chi ) 。<br 
  * 首頁會列出前十大熱門景點。
  
 ## 產品畫面預覽
-![](./src/assets/images/tourist_ref1.jpg)
-![](./src/assets/images/tourist_ref2.png)
+![](https://i.imgur.com/lZgGN0h.jpg)
+![](https://i.imgur.com/xz9ZMlP.png)
 
 ## 下載方法：
  1. 打開終端機，Clone 此專案至本機電腦
